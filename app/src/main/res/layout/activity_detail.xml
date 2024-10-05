@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- ImageView untuk menampilkan gambar buku -->
+    <ImageView
+        android:id="@+id/detailImageView"
+        android:layout_width="250dp"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Book Cover"
+        android:layout_marginLeft="55dp"/>
+
+
+    <!-- TextView untuk menampilkan judul buku -->
+    <TextView
+        android:id="@+id/bookTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"/>
+
+    <!-- TextView untuk menampilkan jumlah klik -->
+    <TextView
+        android:id="@+id/clickCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <!-- WebView untuk menampilkan URL -->
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
