@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="2dp"
-    android:orientation="vertical">
+    android:background="@drawable/border_background"> <!-- Apply the border background -->
 
-    <!-- ImageView untuk cover buku -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
@@ -16,12 +16,21 @@
         android:background="@drawable/rounded_corners"
         android:padding="1dp" />
 
-    <!-- TextView untuk menampilkan judul buku (jika diperlukan) -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_marginTop="8dp"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:gravity="center" />
 </LinearLayout>

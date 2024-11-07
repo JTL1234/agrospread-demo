@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.example.navigation'
+    namespace 'com.limpag.agrospread'
     compileSdkVersion 33
     defaultConfig {
-        applicationId "com.example.navigation"
+        applicationId "com.limpag.agrospread"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1

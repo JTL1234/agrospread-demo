@@ -1,6 +1,6 @@
 <resources>
-    <!-- Nama Aplikasi -->
-    <string name="app_name">Navigation Drawer</string>
+
+    <string name="app_name">AgroSpread</string>
 
     <!-- String untuk Navigation Drawer -->
     <string name="open_nav">Open Navigation Drawer</string>

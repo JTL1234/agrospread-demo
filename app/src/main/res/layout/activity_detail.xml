@@ -5,28 +5,27 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- ImageView untuk menampilkan gambar buku -->
+    <!-- ImageView for displaying the book cover -->
     <ImageView
         android:id="@+id/detailImageView"
         android:layout_width="250dp"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
         android:contentDescription="Book Cover"
-        android:layout_marginLeft="55dp"/>
+        android:layout_marginLeft="55dp" />
 
-
-    <!-- TextView untuk menampilkan judul buku -->
+    <!-- TextView for the book title -->
     <TextView
-        android:id="@+id/bookTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:textAlignment="center"/>
+        android:id="@+id/agroTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:textColor="@android:color/black"
+    android:textAlignment="center" />
 
-    <!-- TextView untuk menampilkan jumlah klik -->
+    <!-- TextView for displaying the click count -->
     <TextView
         android:id="@+id/clickCountTextView"
         android:layout_width="wrap_content"
@@ -35,7 +34,7 @@
         android:textSize="16sp"
         android:textColor="@android:color/darker_gray" />
 
-    <!-- WebView untuk menampilkan URL -->
+    <!-- WebView for displaying a URL -->
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
