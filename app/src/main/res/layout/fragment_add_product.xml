@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="80dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/about_us_image"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:src="@drawable/agrospreadlogo3"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center" />
+        <ImageView
+            android:id="@+id/productimage"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:src="@drawable/agro"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/uploadimage"
+            android:background="@drawable/lavender_border"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:hint="Upload Image"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/productname"
+            android:background="@drawable/lavender_border"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:hint="Product Name"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/productprice"
+            android:background="@drawable/lavender_border"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:hint="Product Price"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/producttype"
+            android:background="@drawable/lavender_border"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:hint="Product Type"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"/>
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:id="@+id/productdesc"
+            android:background="@drawable/lavender_border"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:hint="Product Description"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"/>
+
+        <Button
+            android:id="@+id/Add_Product"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:background="@drawable/lavender_border"
+            android:text="Add Product"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

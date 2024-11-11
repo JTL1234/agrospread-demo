@@ -10,12 +10,9 @@
     tools:openDrawer="start"
     tools:context=".MainActivity">
 
-    <!-- Coordinator Layout for managing toolbar, fragment, and bottom app bar -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -25,14 +22,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <!-- FrameLayout to hold fragments -->
         <FrameLayout
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <!-- Bottom App Bar -->
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
@@ -43,7 +38,6 @@
             app:fabCradleRoundedCornerRadius="50dp"
             app:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
-        <!-- Bottom Navigation View -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -53,7 +47,6 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_menu"/>
 
-        <!-- Floating Action Button -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
@@ -66,7 +59,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- Navigation View for drawer menu -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

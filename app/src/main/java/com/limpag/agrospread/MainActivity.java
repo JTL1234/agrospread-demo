@@ -1,24 +1,27 @@
 package com.limpag.agrospread;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.app.Dialog;
+import android.view.Window;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.graphics.drawable.ColorDrawable;
-import android.app.Dialog;
-import android.content.Intent; // Import statement for Intent
-import android.content.SharedPreferences; // Import statement for SharedPreferences
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,29 +34,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize views
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fab = findViewById(R.id.fab);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        // Use Toolbar from androidx
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Setup ActionBarDrawerToggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Set default fragment when activity is first launched
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView userFullName = headerView.findViewById(R.id.userfullname);
+        TextView userName = headerView.findViewById(R.id.username);
+        CircleImageView profileImage = headerView.findViewById(R.id.profile_image);  // Assuming you have a profile image.
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        String savedFullName = sharedPreferences.getString("fullname", "Default Full Name");
+        String savedUsername = sharedPreferences.getString("username", "Default Username");
+
+
+        userFullName.setText(savedFullName);
+        userName.setText(savedUsername);
+
         if (savedInstanceState == null) {
             replaceFragment(new HomeFragment());
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
-        // Setup BottomNavigationView
+
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
@@ -63,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Tab2Fragment());
                     return true;
                 case R.id.subscriptions:
-                    replaceFragment(new SubscriptionsFragment());
+                    replaceFragment(new AddProduct());
                     return true;
                 case R.id.library:
                     replaceFragment(new LibraryFragment());
@@ -73,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Setup Navigation Drawer
+
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_home:
@@ -89,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.closeDrawers();
                     return true;
                 case R.id.nav_logout:
-                    logout();  // Call the logout method
+                    logout();
                     drawerLayout.closeDrawers();
                     return true;
                 default:
@@ -97,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Setup FloatingActionButton to display a dialog
         fab.setOnClickListener(view -> showBottomDialog());
     }
 
@@ -108,10 +122,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    // Function to log out and go to the login activity
     private void logout() {
-        Log.d("MainActivity", "Logout menu item clicked");
-        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
@@ -122,10 +134,11 @@ public class MainActivity extends AppCompatActivity {
         finish();
         Toast.makeText(MainActivity.this, "Logout successful", Toast.LENGTH_SHORT).show();
     }
+
     private void showBottomDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout); // Ensure this layout file exists
+        dialog.setContentView(R.layout.dialog_layout);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
     }

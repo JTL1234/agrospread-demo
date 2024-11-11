@@ -15,14 +15,8 @@ public class HomeFragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 0:
-                return new Tab1Fragment();
-            case 1:
-                return new Tab2Fragment();
-            case 2:
-                return new Tab1Fragment();
             default:
-                return new Tab2Fragment();
+                return new Tab1Fragment();
         }
     }
 

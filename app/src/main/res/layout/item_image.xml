@@ -5,7 +5,12 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="2dp"
-    android:background="@drawable/border_background"> <!-- Apply the border background -->
+    android:background="@drawable/border_background"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    >
 
     <ImageView
         android:id="@+id/imageView"

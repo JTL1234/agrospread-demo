@@ -2,36 +2,36 @@
 
     <string name="app_name">AgroSpread</string>
 
-    <!-- String untuk Navigation Drawer -->
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
 
-    <!-- Placeholder Fragment -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- Opsi di Settings -->
     <string-array name="settings_options">
         <item>Edit Profile</item>
         <item>Edit Email</item>
         <item>Edit Password</item>
     </string-array>
+    <string name="aboutus">     Welcome to AgroSpread, your trusted E-Commerce platform dedicated to empowering farmers and enhancing agricultural practices. Our mission is to connect farmers with high-quality agricultural products, tools, and equipment, making it easier than ever to thrive in today’s competitive landscape.
 
-    <!-- String untuk Activity Login -->
+      At AgroSpread, we understand the challenges farmers face, from sourcing reliable supplies to managing costs. That’s why we offer a comprehensive selection of fertilizers, seeds, tools, and equipment—all curated to meet the diverse needs of agricultural professionals. Our user-friendly platform allows farmers to browse and purchase the products they need with just a few clicks, ensuring convenience and efficiency.
+
+     We are committed to supporting sustainable farming practices and fostering a community where farmers can share knowledge and resources. Whether you’re a seasoned farmer or just starting out, AgroSpread is here to help you cultivate success.
+
+      Join us in revolutionizing the agricultural supply chain and empowering farmers everywhere. Together, let’s grow a better future!</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
 
-    <!-- Pesan Selamat Datang -->
     <string name="welcome">Welcome!</string>
 
-    <!-- Pesan Error -->
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be &gt;5 characters</string>
     <string name="login_failed">Login failed</string>
 
-    <!-- String lainnya -->
     <string name="logout_message">Logout menu item clicked</string>
     <string name="logout_success">Logout successful</string>
 </resources>

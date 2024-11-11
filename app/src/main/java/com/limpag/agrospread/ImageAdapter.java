@@ -1,78 +1,64 @@
 package com.limpag.agrospread;
+
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+import java.util.List;
 
-    private final int[] images;
-    private final String[] bookTitles;
-    private final String[] bookPrices;
-    private final Context context;
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    private final String CLICK_COUNT_PREF = "click_count_pref";
+    private Context context;
+    private List<Integer> imagesList;
+    private List<String> titlesList;
+    private List<String> pricesList;
 
-    public ImageAdapter(Context context, int[] images, String[] bookTitles, String[] bookPrices) {
+    public ImageAdapter(Context context, List<Integer> imagesList, List<String> titlesList, List<String> pricesList) {
         this.context = context;
-        this.images = images;
-        this.bookTitles = bookTitles;
-        this.bookPrices = bookPrices;
-    }
-
-    @NonNull
-    @Override
-    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false);
-        return new ImageViewHolder(view);
+        this.imagesList = imagesList;
+        this.titlesList = titlesList;
+        this.pricesList = pricesList;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        holder.imageView.setImageResource(images[position]);
-        holder.textViewTitle.setText(bookTitles[position]);  // Set the title for each image
-        holder.textViewPrice.setText(bookPrices[position]);  // Set the price for each image
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
+        return new ViewHolder(view);
+    }
 
-        holder.imageView.setOnClickListener(v -> {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(CLICK_COUNT_PREF, Context.MODE_PRIVATE);
-            int currentCount = sharedPreferences.getInt("cover_" + position, 0); // Get current count
-            currentCount++; // Increment click count
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("cover_" + position, currentCount);
-            editor.apply();
-
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("imageResId", images[position]);
-            intent.putExtra("clickCount", currentCount);
-            intent.putExtra("bookTitle", bookTitles[position]);  // Pass the book title
-            intent.putExtra("bookPrice", bookPrices[position]);  // Pass the price
-            context.startActivity(intent);
-        });
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.productTitle.setText(titlesList.get(position));
+        holder.productPrice.setText(pricesList.get(position));
+        holder.productImage.setImageResource(imagesList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return titlesList.size();
     }
 
-    static class ImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textViewTitle;
-        TextView textViewPrice;  // Add a TextView for the price
+    public void updateList(List<Integer> newImages, List<String> newTitles, List<String> newPrices) {
+        this.imagesList = newImages;
+        this.titlesList = newTitles;
+        this.pricesList = newPrices;
+        notifyDataSetChanged();
+    }
 
-        public ImageViewHolder(@NonNull View itemView) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView productImage;
+        TextView productTitle, productPrice;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
-            textViewTitle = itemView.findViewById(R.id.textViewTitle);  // Initialize the title TextView
-            textViewPrice = itemView.findViewById(R.id.textViewPrice);  // Initialize the price TextView
+            productImage = itemView.findViewById(R.id.product_image);
+            productTitle = itemView.findViewById(R.id.product_title);
+            productPrice = itemView.findViewById(R.id.product_price);
         }
     }
 }

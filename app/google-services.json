@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "557273449421",
+    "project_id": "agrospread-6b47d",
+    "storage_bucket": "agrospread-6b47d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557273449421:android:0f4a1f143269bfc01c7a84",
+        "android_client_info": {
+          "package_name": "com.limpag.agrospread"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeIcFFlNZdEfPXXtQRlWWlGQwznFC79wE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
