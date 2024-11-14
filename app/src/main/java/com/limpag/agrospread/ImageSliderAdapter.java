@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.ImageSliderViewHolder> {
 
-    private final int[] images;
+    private final List<Integer> images;
     private final Context context;
 
-    public ImageSliderAdapter(Context context, int[] images) {
+    public ImageSliderAdapter(Context context, List<Integer> images) {
         this.context = context;
         this.images = images;
     }
@@ -28,12 +30,12 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ImageSliderViewHolder holder, int position) {
-        holder.imageView.setImageResource(images[position]);
+        holder.imageView.setImageResource(images.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return images.size();
     }
 
     public static class ImageSliderViewHolder extends RecyclerView.ViewHolder {

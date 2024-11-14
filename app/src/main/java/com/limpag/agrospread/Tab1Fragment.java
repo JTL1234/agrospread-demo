@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,82 +22,12 @@ import java.util.List;
 
 public class Tab1Fragment extends Fragment {
 
-    private final int[] sliderImages = {
-            R.drawable.slideimage1,
-            R.drawable.slideimage2,
-            R.drawable.slideimage3
-    };
-
-    private final int[] images = {
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake
-    };
-    private final int[] images2 = {
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake,
-            R.drawable.rake
-    };
-
-    private final String[] bookTitles = {
-            "rakebeauty",
-            "rakecool",
-            "rakefresh",
-            "rakeluxe",
-            "rakeswift",
-            "rakelight",
-            "rakemax",
-            "rakeclassic"
-    };
-    private final String[] bookTitles2 = {
-            "rakebeauty",
-            "rakecool",
-            "rakefresh",
-            "rakeluxe",
-            "rakeswift",
-            "rakelight",
-            "rakemax",
-            "rakeclassic"
-    };
-
-    private final String[] bookPrices = {
-            "$900",
-            "$399",
-            "$850",
-            "$1200",
-            "$750",
-            "$650",
-            "$500",
-            "$300"
-    };
-    private final String[] bookPrices2 = {
-            "$900",
-            "$399",
-            "$850",
-            "$1200",
-            "$750",
-            "$650",
-            "$500",
-            "$300"
-    };
-
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
+    private ImageAdapter adapter;
+    private ImageAdapter adapter2;
     private ViewPager2 viewPager;
-    private Handler sliderHandler = new Handler(Looper.getMainLooper());
 
-    private RecyclerView recyclerView, recyclerView2;
-    private ImageAdapter adapter, adapter2;
-
-    // Declare the lists at class level
     private List<Integer> imagesList = new ArrayList<>();
     private List<String> titlesList = new ArrayList<>();
     private List<String> pricesList = new ArrayList<>();
@@ -106,6 +36,18 @@ public class Tab1Fragment extends Fragment {
     private List<String> titlesList2 = new ArrayList<>();
     private List<String> pricesList2 = new ArrayList<>();
 
+    // Default products data
+    private int[] images = {R.drawable.rake, R.drawable.rake, R.drawable.rake};
+    private String[] bookTitles = {"Product 1", "Product 2", "Product 3"};
+    private String[] bookPrices = {"$10", "$20", "$30"};
+
+    private int[] images2 = {R.drawable.rake, R.drawable.rake, R.drawable.rake};
+    private String[] bookTitles2 = {"Featured 1", "Featured 2", "Featured 3"};
+    private String[] bookPrices2 = {"$40", "$50", "$60"};
+
+    private List<Integer> sliderImages = new ArrayList<>();
+
+    // Filtered lists for search functionality
     private List<Integer> filteredImages = new ArrayList<>();
     private List<String> filteredTitles = new ArrayList<>();
     private List<String> filteredPrices = new ArrayList<>();
@@ -113,6 +55,8 @@ public class Tab1Fragment extends Fragment {
     private List<Integer> filteredImages2 = new ArrayList<>();
     private List<String> filteredTitles2 = new ArrayList<>();
     private List<String> filteredPrices2 = new ArrayList<>();
+
+    private Handler sliderHandler = new Handler(Looper.getMainLooper());
 
     @Nullable
     @Override
@@ -128,19 +72,8 @@ public class Tab1Fragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        // Convert arrays to lists for the first RecyclerView
-        for (int image : images) {
-            imagesList.add(image);
-        }
-
-        for (String title : bookTitles) {
-            titlesList.add(title);
-        }
-
-        for (String price : bookPrices) {
-            pricesList.add(price);
-        }
-
+        loadDefaultBestDeals();
+        loadProductsFromDatabase();
         adapter = new ImageAdapter(getActivity(), imagesList, titlesList, pricesList);
         recyclerView.setAdapter(adapter);
 
@@ -148,23 +81,11 @@ public class Tab1Fragment extends Fragment {
         recyclerView2 = view.findViewById(R.id.recyclerView2);
         recyclerView2.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        // Convert arrays to lists for the second RecyclerView
-        for (int image : images2) {
-            imagesList2.add(image);
-        }
-
-        for (String title : bookTitles2) {
-            titlesList2.add(title);
-        }
-
-        for (String price : bookPrices2) {
-            pricesList2.add(price);
-        }
-
+        loadFeaturedDeals();
         adapter2 = new ImageAdapter(getActivity(), imagesList2, titlesList2, pricesList2);
         recyclerView2.setAdapter(adapter2);
 
-        // Search functionality
+        // Setup Search functionality
         SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -179,10 +100,52 @@ public class Tab1Fragment extends Fragment {
             }
         });
 
-        // Start automatic sliding
+        // Start automatic sliding of images
         startAutoSlide();
 
         return view;
+    }
+
+    private void loadDefaultBestDeals() {
+        // Add default items to Best Deals section
+        for (int image : images) {
+            imagesList.add(image);
+        }
+
+        for (String title : bookTitles) {
+            titlesList.add(title);
+        }
+
+        for (String price : bookPrices) {
+            pricesList.add(price);
+        }
+    }
+
+    private void loadProductsFromDatabase() {
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        List<Product> products = dbHelper.getAllProducts();
+
+        // Add newly fetched products from the database to the Best Deals section
+        for (Product product : products) {
+            titlesList.add(product.getName());
+            pricesList.add(product.getPrice());
+            imagesList.add(R.drawable.rake); // Add placeholder for product image (can replace with actual image)
+        }
+    }
+
+    private void loadFeaturedDeals() {
+        // Load default items for Featured Deals section
+        for (int image : images2) {
+            imagesList2.add(image);
+        }
+
+        for (String title : bookTitles2) {
+            titlesList2.add(title);
+        }
+
+        for (String price : bookPrices2) {
+            pricesList2.add(price);
+        }
     }
 
     private void filterResults(String query) {
@@ -227,7 +190,7 @@ public class Tab1Fragment extends Fragment {
         @Override
         public void run() {
             int nextSlide = viewPager.getCurrentItem() + 1;
-            if (nextSlide >= sliderImages.length) {
+            if (nextSlide >= sliderImages.size()) {
                 nextSlide = 0;
             }
             viewPager.setCurrentItem(nextSlide, true);

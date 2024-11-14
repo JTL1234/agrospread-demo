@@ -14,25 +14,14 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class AddProduct extends Fragment {
 
     private EditText productName, productPrice, productType, productDesc;
     private Button uploadButton, addProductButton;
     private ImageView productImageView;
     private Uri imageUri;
-    private FirebaseStorage firebaseStorage;
-    private FirebaseFirestore firestore;
-    private StorageReference storageReference;
+
+    private DatabaseHelper dbHelper;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -45,10 +34,8 @@ public class AddProduct extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
 
-        // Initialize Firebase
-        firebaseStorage = FirebaseStorage.getInstance();
-        firestore = FirebaseFirestore.getInstance();
-        storageReference = firebaseStorage.getReference().child("product_images");
+        // Initialize SQLite database helper
+        dbHelper = new DatabaseHelper(getActivity());
 
         // Find views by ID
         productName = view.findViewById(R.id.productname);
@@ -94,36 +81,14 @@ public class AddProduct extends Fragment {
             return;
         }
 
-        // Upload the image to Firebase Storage
-        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
-        fileReference.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String imageUrl = uri.toString();
-                    saveProductToFirestore(name, price, type, desc, imageUrl);
-                }))
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getActivity(), "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
+        // Convert image URI to string to store in SQLite
+        String imageUriString = imageUri.toString();
 
-    private void saveProductToFirestore(String name, String price, String type, String desc, String imageUrl) {
-        Map<String, Object> productData = new HashMap<>();
-        productData.put("name", name);
-        productData.put("price", price);
-        productData.put("type", type);
-        productData.put("description", desc);
-        productData.put("image_url", imageUrl);
+        // Save the product to SQLite
+        dbHelper.addProduct(name, price, type, desc, imageUriString);
 
-        firestore.collection("products")
-                .add(productData)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(getActivity(), "Product added successfully!", Toast.LENGTH_SHORT).show();
-                    clearFields(); // Clear the input fields after saving
-                    // Optionally, you could update a RecyclerView here to show the new product
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getActivity(), "Failed to add product: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        Toast.makeText(getActivity(), "Product added successfully!", Toast.LENGTH_SHORT).show();
+        clearFields(); // Clear the input fields after saving
     }
 
     private void clearFields() {
@@ -134,4 +99,3 @@ public class AddProduct extends Fragment {
         productImageView.setImageResource(0); // Clear the image
     }
 }
-

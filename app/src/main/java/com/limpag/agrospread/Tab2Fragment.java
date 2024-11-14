@@ -22,6 +22,7 @@ import java.util.List;
 
 public class Tab2Fragment extends Fragment {
 
+    // Arrays for images (Resource IDs for slider and products)
     private final int[] sliderImages = {
             R.drawable.slideimage1,
             R.drawable.slideimage2,
@@ -38,6 +39,7 @@ public class Tab2Fragment extends Fragment {
             R.drawable.rake,
             R.drawable.rake
     };
+
     private final String[] bookTitles = {
             "rakebeauty",
             "rakecool",
@@ -48,6 +50,7 @@ public class Tab2Fragment extends Fragment {
             "rakemax",
             "rakeclassic"
     };
+
     private final String[] bookPrices = {
             "$900",
             "$399",
@@ -96,9 +99,15 @@ public class Tab2Fragment extends Fragment {
             }
         });
 
+        // Convert sliderImages array to List<Integer> for the ImageSliderAdapter
+        List<Integer> sliderImageList = new ArrayList<>();
+        for (int image : sliderImages) {
+            sliderImageList.add(image);
+        }
+
         // Setup Image Slider (ViewPager2)
         viewPager = view.findViewById(R.id.viewPager);
-        ImageSliderAdapter sliderAdapter = new ImageSliderAdapter(getContext(), sliderImages);
+        ImageSliderAdapter sliderAdapter = new ImageSliderAdapter(getContext(), sliderImageList);
         viewPager.setAdapter(sliderAdapter);
 
         // Setup RecyclerView for Best Deals
